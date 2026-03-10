@@ -424,6 +424,58 @@ img{ image-rendering: -webkit-optimize-contrast; }
 @media (max-width: 860px){ .mosaic-grid{ grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 540px){ .mosaic-grid{ grid-template-columns: repeat(3, 1fr); } }
 
+
+
+/* ===== Solid modal (readability-first) ===== */
+
+/* Darker overlay and no blur behind it */
+.modal {
+  background: rgba(2, 6, 23, 0.55) !important;  /* was ~0.26 */
+  backdrop-filter: none !important;
+}
+
+/* Solid panel, no glass */
+.modal-panel {
+  background: #ffffff !important;               /* solid white; change if needed */
+  border: 1px solid rgba(24, 34, 48, 0.16) !important;
+  backdrop-filter: none !important;
+}
+
+/* Remove text glows meant for glass and enforce crisp colors */
+.modal-title,
+.modal-meta,
+.modal-desc,
+.kvlist .key,
+.kvlist .val {
+  text-shadow: none !important;
+  color: #0b1220 !important;                    /* deep slate for contrast */
+}
+
+/* Tags inside modal: make chips fully solid */
+.modal-tags .tag {
+  background: #ffffff !important;
+  border: 1px solid rgba(24, 34, 48, 0.16) !important;
+  color: #0b1220 !important;
+}
+
+/* Close button: solid + clear edge */
+.modal-close {
+  background: #ffffff !important;
+  color: #111827 !important;
+  border: 1px solid rgba(24, 34, 48, 0.16) !important;
+}
+
+/* Keep the accent bar; it already reflects the card's category color */
+.modal-accent {
+  box-shadow: none !important;
+}
+
+/* Optional guard: ensure no blur under any modal element */
+.modal * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 </style>
 </head>
 <body>
