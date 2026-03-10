@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-
-<html data-lang="en" lang="en">
+<html lang="en" data-lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
-<title>Tuen Teen Book Fair Book Explorer</title>
-<meta content="Browse curated books by category. Chroma mid-tone theme with modal details, touch-friendly for iPad." name="description"/>
-<meta content="#efeefe" name="theme-color"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
-<style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <title>Tuen Teen Book Fair Book Explorer</title>
+  <meta name="description" content="Browse curated books by category. Chroma mid-tone theme with modal details, touch-friendly for iPad." />
+  <meta name="theme-color" content="#efeefe">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <style>
     /* ===== Chroma (mid-tone, color-forward glass) ===== */
     :root{
       /* Base surfaces */
@@ -479,93 +479,105 @@ img{ image-rendering: -webkit-optimize-contrast; }
 </style>
 </head>
 <body>
-<header>
-<div class="container">
-<div aria-label="Page title and controls" class="title-row" role="region">
-<div class="brand">
-<div aria-hidden="true" class="brand-logo"></div>
-<div>
-<h1 id="ui-title">Tuen Teen Book Fair Book Explorer</h1>
-<div class="sub" id="ui-sub">Browse by category • Search • Sort • Tap a card to view details</div>
-</div>
-</div>
-<div class="top-actions">
-<!-- Language selector -->
-<div class="lang" id="lang">
-<button aria-controls="langMenu" aria-expanded="false" aria-haspopup="true" class="lang-btn" id="langBtn">🌐 English</button>
-<div class="lang-menu" id="langMenu" role="menu">
-<div class="lang-option" data-lang="en" role="menuitem">🇬🇧 English</div>
-<div class="lang-option" data-lang="zh-Hant" role="menuitem">🇭🇰 繁體中文</div>
-</div>
-</div>
-<div class="controls">
-<label class="sr-only" for="search">Search books</label>
-<input aria-label="Search books" class="input" id="search" placeholder="Search title, author, ISBN, publisher…" type="search"/>
-<label class="sr-only" for="sort">Sort books</label>
-<select aria-label="Sort books" id="sort">
-<option value="title-asc">Sort: Title (A → Z)</option>
-<option value="title-desc">Sort: Title (Z → A)</option>
-<option value="date-desc">Sort: Publish Date (New → Old)</option>
-<option value="date-asc">Sort: Publish Date (Old → New)</option>
-<option value="pages-desc">Sort: Pages (High → Low)</option>
-<option value="pages-asc">Sort: Pages (Low → High)</option>
-</select>
-</div>
-<!-- 🎲 Random Recommend Button -->
-<button aria-label="Pick a random book" class="rand-btn" id="randomBtn">🎲 Random</button>
-</div>
-</div>
-<nav aria-label="Book categories" class="pillbar" id="categoryBar"></nav>
-</div>
-</header>
+  <header>
+    <div class="container">
+      <div class="title-row" role="region" aria-label="Page title and controls">
+        <div class="brand">
+          <div class="brand-logo" aria-hidden="true"></div>
+          <div>
+            <h1 id="ui-title">Tuen Teen Book Fair Book Explorer</h1>
+            <div id="ui-sub" class="sub">Browse by category • Search • Sort • Tap a card to view details</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <!-- Language selector -->
+          <div class="lang" id="lang">
+            <button id="langBtn" class="lang-btn" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu">🌐 English</button>
+            <div id="langMenu" class="lang-menu" role="menu">
+              <div class="lang-option" data-lang="en" role="menuitem">🇬🇧 English</div>
+              <div class="lang-option" data-lang="zh-Hant" role="menuitem">🇭🇰 繁體中文</div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <label for="search" class="sr-only">Search books</label>
+            <input id="search" type="search" class="input" placeholder="Search title, author, ISBN, publisher…" aria-label="Search books" />
+            <label for="sort" class="sr-only">Sort books</label>
+            <select id="sort" aria-label="Sort books">
+              <option value="title-asc">Sort: Title (A → Z)</option>
+              <option value="title-desc">Sort: Title (Z → A)</option>
+              <option value="date-desc">Sort: Publish Date (New → Old)</option>
+              <option value="date-asc">Sort: Publish Date (Old → New)</option>
+              <option value="pages-desc">Sort: Pages (High → Low)</option>
+              <option value="pages-asc">Sort: Pages (Low → High)</option>
+            </select>
+          </div>
+
+          <!-- 🎲 Random Recommend Button -->
+          <button id="randomBtn" class="rand-btn" aria-label="Pick a random book">🎲 Random</button>
+        </div>
+      </div>
+      <nav class="pillbar" id="categoryBar" aria-label="Book categories"></nav>
+    </div>
+  </header>
+
 <!-- 🟣 Welcome overlay (shown once) -->
-<div aria-describedby="welcomeDesc" aria-labelledby="welcomeTitle" aria-modal="true" class="welcome-overlay" id="welcomeOverlay" role="dialog">
-<div aria-hidden='\"true\"' class='\"mosaic-grid\"' id='\"mosaic\"'></div>
-<!-- floating covers live here -->
-<div aria-hidden="true" class="welcome-float-field" id="welcomeFloatField"></div>
-<!-- NEW: mini cover grid -->
-<div aria-hidden="true" class="welcome-cover-grid" id="welcomeCoverGrid"></div>
-<!-- center card -->
-<div class="welcome-card">
-<div class="modal-accent" style="height:6px; background:linear-gradient(90deg, var(--primary), var(--accent-2));"></div>
-<h2 id="welcomeTitle">Welcome</h2>
-<p id="welcomeDesc">Browse and tap the button to enter the book list.</p>
-<button class="btn" id="welcomeEnterBtn" style="margin-top:6px;">Enter</button>
+<div id="welcomeOverlay" class="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeDesc">
+
+  <div id=\"mosaic\" class=\"mosaic-grid\" aria-hidden=\"true\"></div>
+
+  <!-- floating covers live here -->
+  <div id="welcomeFloatField" class="welcome-float-field" aria-hidden="true"></div>
+  <!-- NEW: mini cover grid -->
+  <div id="welcomeCoverGrid" class="welcome-cover-grid" aria-hidden="true"></div>
+
+
+  <!-- center card -->
+  <div class="welcome-card">
+    <div class="modal-accent" style="height:6px; background:linear-gradient(90deg, var(--primary), var(--accent-2));"></div>
+    <h2 id="welcomeTitle">Welcome</h2>
+    <p id="welcomeDesc">Browse and tap the button to enter the book list.</p>
+    <button id="welcomeEnterBtn" class="btn" style="margin-top:6px;">Enter</button>
+  </div>
 </div>
-</div>
-<main>
-<div class="container">
-<section aria-live="polite">
-<div class="grid" id="grid" role="list"></div>
-<div class="empty" hidden="" id="emptyState">
+
+
+  <main>
+    <div class="container">
+      <section aria-live="polite">
+        <div id="grid" class="grid" role="list"></div>
+        <div id="emptyState" class="empty" hidden>
           No books match your filters. Try clearing search or switching category.
         </div>
-</section>
-</div>
-</main>
-<footer id="ui-footer">
+      </section>
+    </div>
+  </main>
+
+  <footer id="ui-footer">
     Tap a card to view details
   </footer>
-<!-- Details Modal -->
-<div aria-hidden="true" class="modal" id="modal">
-<div aria-labelledby="modalTitle" aria-modal="true" class="modal-panel" role="dialog">
-<div class="modal-accent" id="modalAccent"></div>
-<button aria-label="Close" class="modal-close" id="modalClose">✕</button>
-<div class="modal-inner">
-<img alt="" class="modal-cover" id="modalCover" loading="lazy"/>
-<div>
-<h2 class="modal-title" id="modalTitle"></h2>
-<div class="modal-meta" id="modalMeta"></div>
-<div class="modal-tags" id="modalTags"></div>
-<div class="kvlist" id="modalKv"></div>
-<p class="modal-desc" id="modalDesc"></p>
-</div>
-</div>
-<div class="modal-actions">
-<button class="btn ghost" id="modalCloseBottom">Close</button>
-</div>
-</div>
-</div>
+
+  <!-- Details Modal -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-accent" id="modalAccent"></div>
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-inner">
+        <img id="modalCover" class="modal-cover" alt="" loading="lazy" />
+        <div>
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <div id="modalMeta" class="modal-meta"></div>
+          <div id="modalTags" class="modal-tags"></div>
+          <div class="kvlist" id="modalKv"></div>
+          <p id="modalDesc" class="modal-desc"></p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="modalCloseBottom" class="btn ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
 <script>
   /**
    * Chroma theme app logic with clarity patch active
@@ -596,7 +608,7 @@ img{ image-rendering: -webkit-optimize-contrast; }
         pages: "Pages", isbn: "ISBN", description: "Description"
       },
       empty: "No books match your filters. Try clearing search or switching category.",
-      footer: "Built for iPad • Chroma theme • Single HTML • Tap a card to view details",
+      footer: "Tap a card to view details",
       modal: { close: "Close", coverAlt: (title) => `Book cover: ${title}`, metaSep: "·" },
       langButton: "🌐 English",
       randomBtn: "🎲 Random",
@@ -1345,15 +1357,15 @@ img{ image-rendering: -webkit-optimize-contrast; }
   {
     "isbn": "9789620458132",
     "title": "閱讀力",
-    "author": "聶震寧",
-    "publisher": "三聯書店(香港)有限公司",
+    "author": "",
+    "publisher": "",
     "language": "chinese",
     "categories": [
       "Social Sciences & Culture"
     ],
-    "publish_date": "2026",
+    "publish_date": "",
     "pages": 224,
-    "description": "一百年前，中國出現了各界知識分子向讀者所發出的一種主張，認為由名家開列出來的“必讀書”實非人人必讀的，因為——“你的口味還得你自己發現先（徐志摩語）”。魯迅更是在學者、作家及編輯孫伏園所舉辦的薦書活動中作出形同 “交白卷”的回應：“從來沒有留心過，所以現在說不出。”\n\n2025年，面對國內大學生疲於閱讀經典的現狀，聶震寧先生提出，社會應改“必讀書”為“應知書”，繼續推動社區層面不分年齡段的廣泛閱讀，並對年青讀者加以引導；原因是——書海廣博而龐雜，如能有應知書作為參考，我國讀者的有效閲讀的效率必將顯著提高。\n\n“古往今來，壞書爛書可以說是一地雞毛，現今我國出版業年出書早已超過40萬種，誰敢保證本本開卷有益？”\n\n“……一個當代史學研究者，倘若不知道呂思勉、錢穆、陳寅恪、陳垣和他們的書，豈不成笑話？而一個當代史學閱讀者，不知道《萬曆十五年》是不是也不應當？”\n\n作者聶震寧先生是全民閱讀的倡導者、領讀人，多年來一直在全國各地的全民閱讀活動、閱讀論壇、讀書會和大中小學讀書報告會上發表演講，獲得熱烈反響。\n\n應知書概念普及之外，本書亦為作者多年研究閱讀學、普及閱讀學知識的經驗總結。書中通過梳理人類的閱讀歷史、閱讀方法和閱讀目的，對各種閱讀活動和閱讀現象進行辯證分析，指出“閱讀力的培養實際上是人類思維能力的培養”，從而在閱讀史上首次提出“閱讀力”這一概念。"},
+    "description": "提升閱讀能力的指南"},
   {
     "isbn": "9789575467210",
     "title": "活出意義來──從集中營說到存在主義",
@@ -1366,7 +1378,7 @@ img{ image-rendering: -webkit-optimize-contrast; }
     ],
     "publish_date": "2012",
     "pages": 175,
-    "description": "Traditional Chinese edition of Professor Viktor E. Frankl's classic \"Mans Search for Meaning.\" Frankl is the founder of Logotherapy which differs from Freud and Adler's psychotherapy theories. Logotherapy focuses on \"will to meaning\" as oppose to Freud's \"will to pleasure\" and Adler's \"will to power.\" In Traditional Chinese. Annotation copyright Tsai Fong Books, Inc. Distributed by Tsai Fong Books, Inc."}
+    "description": "Traditional Chinese edition of Professor Viktor E. Frankl's classic \"Man's Search for Meaning.\" Frankl is the founder of Logotherapy which differs from Freud and Adler's psychotherapy theories. Logotherapy focuses on \"will to meaning\" as oppose to Freud's \"will to pleasure\" and Adler's \"will to power.\" In Traditional Chinese. Annotation copyright Tsai Fong Books, Inc. Distributed by Tsai Fong Books, Inc."}
 ];
 
   // ===== Category colors & gradients =====
@@ -2058,6 +2070,97 @@ function renderWelcomeCoverGrid(limit = 32){
   try { renderWelcomeCoverGrid(32); } catch(e){}
 })();
 
+
+// === Idle-to-Welcome (1 minute) ============================================
+// Drop-in: no external deps; uses existing openWelcome()/closeModal().
+(function initIdleReturn() {
+  const IDLE_MS = 60 * 1000;      // ← change if you want a different timeout
+
+  let idleTimer = null;
+  let lastReset = 0;
+  let welcomeEl = null;
+
+  function getWelcomeEl() {
+    return (welcomeEl ||= document.getElementById('welcomeOverlay'));
+  }
+  function isWelcomeOpen() {
+    const el = getWelcomeEl();
+    return !!(el && el.classList.contains('open'));
+  }
+
+  function clearIdleCountdown() {
+    if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+  }
+  function startIdleCountdown() {
+    clearIdleCountdown();
+    idleTimer = setTimeout(onIdle, IDLE_MS);
+  }
+
+  function onIdle() {
+    if (isWelcomeOpen()) return; // Already at welcome
+
+    // Close details modal if open
+    try {
+      const modalOpen = document.getElementById('modal')?.classList.contains('open');
+      if (modalOpen && typeof closeModal === 'function') closeModal();
+    } catch (_) {}
+
+    // Optional: jump to top so the welcome appears from top (comment out if undesired)
+    try { window.scrollTo({ top: 0, behavior: 'instant' }); } catch (_) {}
+
+    // Return to welcome
+    try { openWelcome(); } catch (_) {}
+
+    // Pause while welcome is showing
+    clearIdleCountdown();
+  }
+
+  // Treat these as activity
+  const ACTIVITY_EVENTS = ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart', 'scroll'];
+
+  function handleActivity(evt) {
+    if (isWelcomeOpen()) return; // ignore while welcome is up
+
+    const now = Date.now();
+    // Throttle noisy events (pointermove/scroll) to every 500ms
+    if ((evt.type === 'pointermove' || evt.type === 'scroll') && now - lastReset < 500) return;
+
+    lastReset = now;
+    startIdleCountdown();
+  }
+
+  // Listen early (capture) and passive for perf
+  ACTIVITY_EVENTS.forEach(type =>
+    window.addEventListener(type, handleActivity, { passive: true, capture: true })
+  );
+
+  // Watch welcome overlay class changes to pause/resume the timer
+  const ov = getWelcomeEl();
+  if (ov) {
+    const obs = new MutationObserver(() => {
+      if (isWelcomeOpen()) clearIdleCountdown();
+      else startIdleCountdown();
+    });
+    obs.observe(ov, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  // When user taps "Enter" on the welcome, resume timer
+  document.getElementById('welcomeEnterBtn')?.addEventListener('click', () => {
+    startIdleCountdown();
+  });
+
+  // Also treat language change & random as explicit activity
+  document.getElementById('langMenu')?.addEventListener('click', handleActivity, { passive: true });
+  document.getElementById('randomBtn')?.addEventListener('click', handleActivity, { passive: true });
+
+  // Escape key (closes modal) counts as activity
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') handleActivity(e);
+  }, { passive: true });
+
+  // Kick off if welcome is currently closed
+  if (!isWelcomeOpen()) startIdleCountdown();
+})();
 </script>
 </body>
 </html>
